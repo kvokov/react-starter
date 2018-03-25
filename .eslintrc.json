@@ -1,0 +1,16 @@
+{
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": [2, "never"],
+    "no-unexpected-multiline": 2,
+    "linebreak-style": 0,
+    "max-len": ["error", 160],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "a" ] }]
+  }
+}
