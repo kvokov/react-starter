@@ -14,7 +14,7 @@ const styles = {
 }
 
 class RestorePassword extends Component {
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     this.props.resetUserProcessing()
   }
 

@@ -20,7 +20,7 @@ const styles = {
 }
 
 class Login extends Component {
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     this.props.resetUserProcessing()
   }
 

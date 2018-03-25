@@ -11,16 +11,23 @@ import routes from '../shared/routes'
 import Router from '../shared/components/router'
 import { ACCESS_TOKEN_COOKIE } from '../shared/config'
 
-
-const loadBranchData = (location, store, cookie) => {
-  const branch = matchRoutes(routes, location.pathname)
-  const promises = branch.map(({ route, match }) => (
-    route.loadData
-      ? route.loadData({ match, store, cookie })
-      : Promise.resolve(null)))
-  return Promise.all(promises)
+const getPreloadMethod = (component) => {
+  let preloadMethod = component.preload
+  const decoratedComponent = (component.DecoratedComponent || component.WrappedComponent)
+  if (!preloadMethod && decoratedComponent) {
+    preloadMethod = decoratedComponent.preload
+    if (!preloadMethod) {
+      preloadMethod = decoratedComponent.DecoratedComponent && decoratedComponent.DecoratedComponent.preload
+    }
+  }
+  return preloadMethod || (() => null)
 }
 
+const loadBranchData = (path, store) => {
+  const branch = matchRoutes(routes, path)
+  const promises = branch.map(({ route, match }) => getPreloadMethod(route.component)({ match, store }))
+  return Promise.all(promises)
+}
 
 export default (req, res, next) => {
   global.navigator = { userAgent: req.get('user-agent') }
@@ -28,7 +35,7 @@ export default (req, res, next) => {
 
   const history = createMemoryHistory()
   const store = configureStore(req.universalCookies, history)
-  return loadBranchData(req.url, store, req.universalCookies)
+  return loadBranchData(req.path, store)
     .then(() => {
       const routerContext = {}
       const appComponent = (

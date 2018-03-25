@@ -5,7 +5,7 @@ if (!process.env.BROWSER) {
 }
 
 
-export const BROWSER = process.env.BROWSER
+export const { BROWSER } = process.env
 export const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : 'development'
 export const WEB_PORT = process.env.WEB_PORT || 3000
 export const WDS_PORT = process.env.WDS_PORT || 7000

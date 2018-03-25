@@ -5,7 +5,7 @@
   "author": "DK <kvokovdl@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon -e js,jsx --watch src app --exec babel-node src/server",
+    "start": "nodemon -e js,jsx --watch src --exec babel-node src/server",
     "serve": "webpack-dev-server",
     "prod:build": "yarn prod:build-server && yarn prod:build-client",
     "prod:build-server": "rimraf dist && babel src/server -d dist/server/server && babel src/shared -d dist/server/shared",

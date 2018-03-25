@@ -10,7 +10,7 @@ import { registerUser, resetUserProcessing } from '../../actions/user'
 import { formatErrors } from '../../helpers/utils'
 
 class Register extends Component {
-  componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps(nextProps) {
     const { userModel } = this.props
     if (!userModel.get('success') && nextProps.userModel.get('success')) {
       this.redirectTimer = setTimeout(() => (
@@ -19,7 +19,7 @@ class Register extends Component {
     }
   }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     if (this.redirectTimer) {
       clearTimeout(this.redirectTimer)
     }
