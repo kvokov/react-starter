@@ -1,8 +1,10 @@
 import { Map } from 'immutable'
 import { Cookies } from 'react-cookie'
-import { DEFAULT_LOCALE, ACCESS_TOKEN_COOKIE } from '../config'
+import { BROWSER, NODE_ENV, DEFAULT_LOCALE, ACCESS_TOKEN_COOKIE } from '../config'
 
-export const isProd = process.env.NODE_ENV === 'production'
+export const isBrowser = BROWSER
+
+export const isProd = NODE_ENV === 'production'
 export const isDev = !isProd
 
 // eslint-disable-next-line
