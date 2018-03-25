@@ -64,7 +64,7 @@ To find used variables check `src/shared/config.js`. Also system environment var
 
 * `$ yarn prod:stop` - Stop production server.
 
-* `$ yarn prod:restart` - Stop production server.
+* `$ yarn prod:restart` - Restart production server.
 
 * `$ yarn prod:build-server` - Make production build for server only.
 
