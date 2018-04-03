@@ -37,10 +37,10 @@ export default (req, res, next) => {
   const store = configureStore(req.universalCookies, history)
   return loadBranchData(req.path, store)
     .then(() => {
-      const routerContext = {}
+      const staticContext = {}
       const appComponent = (
         <Provider store={store}>
-          <StaticRouter location={req.url} context={routerContext}>
+          <StaticRouter location={req.url} context={staticContext}>
             <CookiesProvider cookies={req.universalCookies}>
               <Router />
             </CookiesProvider>
@@ -49,12 +49,14 @@ export default (req, res, next) => {
       )
       const appHtml = ReactDOMServer.renderToString(appComponent)
 
-      // routerContext.url will contain the URL to redirect to if a <Redirect> was used
-      if (routerContext.url) {
-        res.redirect(302, routerContext.url)
-      } else {
-        res.send(renderApp(appHtml, store))
+      // staticContext.url will contain the URL to redirect to if a <Redirect> was used
+      if (staticContext.url) {
+        return res.redirect(302, staticContext.url)
       }
+
+      return res
+        .status(staticContext.statusCode || 200)
+        .send(renderApp(appHtml, store))
     })
     .catch(next)
 }
