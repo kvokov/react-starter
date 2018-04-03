@@ -6,15 +6,17 @@ import 'isomorphic-fetch'
 import { STATIC_PATH, WEB_PORT } from '../shared/config'
 import { isProd } from '../shared/helpers/utils'
 import ssr from './ssr'
+import errorHandler from './error-handler'
 
 const app = express()
 
 app.use(compression())
 app.use(cookieMiddleware())
-
 app.use(STATIC_PATH, express.static(path.join(__dirname, '../../public')))
 
 app.get('*', ssr)
+
+app.use('*', errorHandler)
 
 app.listen(WEB_PORT, () => {
   // eslint-disable-next-line no-console
